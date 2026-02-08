@@ -1,27 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Live</title>
-<link rel="stylesheet" href="css/core.css">
+<meta charset="UTF-8">
+<title>Hola Live · Stream</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body class="live">
+
+<div class="live-video">
+  <div class="live-overlay"></div>
+  <span class="live-badge">🔴 LIVE</span>
+</div>
+
+<div class="live-ui">
+
+  <div class="streamer">
+    <img src="https://i.pravatar.cc/100">
+    <div>
+      <h3>@QueenFox</h3>
+      <p>🔥 3.2k viewers</p>
+    </div>
+  </div>
+
+  <div id="chat" class="chat"></div>
+
+  <div class="actions">
+    <button onclick="sendGift()">🎁 Gift</button>
+    <button onclick="toggleSound()">🔊</button>
+  </div>
+
+</div>
+
 <script src="js/state.js"></script>
 <script src="js/sound.js"></script>
-<script src="js/chat.js"></script>
 <script src="js/gifts.js"></script>
-<script src="js/moderator.js"></script>
-</head>
-<body>
+<script src="js/fake-chat.js"></script>
 
-<h2>🔴 LIVE NOW</h2>
-<div id="stream">🎥 STREAM FEED</div>
-
-<div id="chat"></div>
-
-<button onclick="sendGift()">🎁 Send Gift</button>
-<button onclick="toggleMod()">🛡 MOD</button>
-
-<script>
-initChat();
-playAmbient();
-</script>
 </body>
 </html>
