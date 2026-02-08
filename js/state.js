@@ -1,1 +1,3 @@
-console.log("Hola Live state ready");
+window.muted=false;
+window.slowMode=false;
+console.log("Hola Live FINAL state ready");
