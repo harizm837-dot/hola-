@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Live</title>
+<link rel="stylesheet" href="css/core.css">
+<script src="js/state.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/gifts.js"></script>
+<script src="js/moderator.js"></script>
+</head>
+<body>
+
+<h2>🔴 LIVE NOW</h2>
+<div id="stream">🎥 STREAM FEED</div>
+
+<div id="chat"></div>
+
+<button onclick="sendGift()">🎁 Send Gift</button>
+<button onclick="toggleMod()">🛡 MOD</button>
+
+<script>
+initChat();
+playAmbient();
+</script>
+</body>
+</html>
