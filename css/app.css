@@ -1,0 +1,101 @@
+:root{
+  --bg:#0b0614;
+  --panel:#160b2e;
+  --neon:#a855ff;
+  --text:#f5f3ff;
+  --muted:#b6a9ff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+}
+
+/* ===== INTRO ===== */
+
+.intro-bg{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top,#5f2dbb 0%,transparent 50%),
+    linear-gradient(180deg,#12001f,#000);
+  filter:blur(0px);
+}
+
+.intro-content{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:24px;
+  text-align:center;
+}
+
+.logo{
+  font-family:Orbitron,sans-serif;
+  font-size:42px;
+  letter-spacing:2px;
+  margin:0;
+  text-shadow:0 0 25px rgba(168,85,255,.6);
+}
+
+.tagline{
+  margin:8px 0 32px;
+  color:var(--muted);
+  letter-spacing:3px;
+  font-size:12px;
+}
+
+/* ===== ROLE CARDS ===== */
+
+.role-cards{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+  width:100%;
+  max-width:360px;
+}
+
+.role{
+  background:linear-gradient(180deg,#1b0f3b,#12001f);
+  border-radius:18px;
+  padding:20px;
+  text-align:left;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  border:1px solid rgba(168,85,255,.25);
+  transition:.25s;
+}
+
+.role span{
+  font-size:26px;
+}
+
+.role h3{
+  margin:8px 0 4px;
+  font-weight:600;
+}
+
+.role p{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.role:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 30px rgba(168,85,255,.35);
+}
+
+/* ===== TRANSITION ===== */
+
+.fade-out{
+  opacity:0;
+  transition:.6s;
+}
