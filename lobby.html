@@ -1,20 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Lobby</title>
-<link rel="stylesheet" href="css/core.css">
-<script src="js/state.js"></script>
+<meta charset="UTF-8">
+<title>Hola Live · Lobby</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="css/app.css">
 </head>
-<body>
-<h1>🔥 Live Streams</h1>
 
-<div class="card" onclick="goLive()">🎥 Stream #1 <span id="viewers"></span></div>
-<button onclick="location.href='shop.html'">🛒 Token Shop</button>
+<body class="lobby">
+
+<header class="topbar">
+  <h1>🔥 Live Now</h1>
+  <span class="balance">💰 10,170</span>
+</header>
+
+<div class="streams">
+
+  <div class="stream-card" onclick="goLive()">
+    <div class="thumb"></div>
+    <div class="info">
+      <h3>@QueenFox</h3>
+      <p>🔥 3.2k viewers</p>
+    </div>
+  </div>
+
+  <div class="stream-card" onclick="goLive()">
+    <div class="thumb vip"></div>
+    <div class="info">
+      <h3>@VIP_Khan</h3>
+      <p>💎 VIP Room</p>
+    </div>
+  </div>
+
+</div>
 
 <script>
-let v=120;
-setInterval(()=>document.getElementById("viewers").innerText="👀 "+(++v),1200);
-function goLive(){location.href="live.html"}
+function goLive(){
+  document.body.classList.add("fade-out");
+  setTimeout(()=>location.href="live.html",500);
+}
 </script>
+
 </body>
 </html>
