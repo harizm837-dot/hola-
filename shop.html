@@ -1,22 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Shop</title>
-<link rel="stylesheet" href="css/core.css">
-<script src="js/state.js"></script>
+<meta charset="UTF-8">
+<title>Hola Live · Token Shop</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
 </head>
-<body>
-<h1>🛒 Token Shop</h1>
-<p>Tokens: <span id="t"></span></p>
-<button onclick="buy()">+100 Tokens</button>
 
-<script>
-document.getElementById("t").innerText=state.tokens;
-function buy(){
-  state.tokens+=100;
-  save();
-  document.getElementById("t").innerText=state.tokens;
-}
-</script>
+<body class="shop">
+
+<header class="shop-top">
+  <h1>💰 Token Shop</h1>
+  <span id="balance"></span>
+</header>
+
+<div class="shop-items">
+
+  <div class="item">
+    <h3>🎁 Gift Pack</h3>
+    <p>Send gifts on live</p>
+    <button onclick="buy('gift',100)">Buy · 100</button>
+  </div>
+
+  <div class="item">
+    <h3>✨ FX Boost</h3>
+    <p>Unlock cinematic combo</p>
+    <button onclick="buy('fx',300)">Buy · 300</button>
+  </div>
+
+  <div class="item vip-item">
+    <h3>💎 VIP ACCESS</h3>
+    <p>Enter VIP room</p>
+    <button onclick="buy('vip',500)">Unlock · 500</button>
+  </div>
+
+</div>
+
+<script src="js/state.js"></script>
+<script src="js/shop.js"></script>
+
 </body>
 </html>
