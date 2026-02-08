@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lobby</title>
+<link rel="stylesheet" href="css/core.css">
+<script src="js/state.js"></script>
+</head>
+<body>
+<h1>🔥 Live Streams</h1>
+
+<div class="card" onclick="goLive()">🎥 Stream #1 <span id="viewers"></span></div>
+<button onclick="location.href='shop.html'">🛒 Token Shop</button>
+
+<script>
+let v=120;
+setInterval(()=>document.getElementById("viewers").innerText="👀 "+(++v),1200);
+function goLive(){location.href="live.html"}
+</script>
+</body>
+</html>
