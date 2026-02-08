@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shop</title>
+<link rel="stylesheet" href="css/core.css">
+<script src="js/state.js"></script>
+</head>
+<body>
+<h1>🛒 Token Shop</h1>
+<p>Tokens: <span id="t"></span></p>
+<button onclick="buy()">+100 Tokens</button>
+
+<script>
+document.getElementById("t").innerText=state.tokens;
+function buy(){
+  state.tokens+=100;
+  save();
+  document.getElementById("t").innerText=state.tokens;
+}
+</script>
+</body>
+</html>
