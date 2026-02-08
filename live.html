@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hola Live · Stream</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body class="live">
+
+<!-- VIDEO -->
+<div class="live-video">
+  <span class="live-badge">🔴 LIVE</span>
+</div>
+
+<!-- UI -->
+<div class="live-ui">
+
+  <div class="streamer">
+    <img src="https://i.pravatar.cc/100">
+    <div>
+      <h3>@QueenFox</h3>
+      <p>🔥 3.2k viewers</p>
+    </div>
+  </div>
+
+  <div id="chat" class="chat"></div>
+
+  <div class="actions">
+    <button onclick="sendGift()">🎁 Gift</button>
+    <button onclick="toggleSound()">🔊</button>
+    <button onclick="toggleMod()">🛡 MOD</button>
+  </div>
+</div>
+
+<!-- MOD PANEL -->
+<div id="modPanel" class="mod-panel">
+  <h3>🛡 Moderator</h3>
+  <button onclick="modAction('mute')">🔇 Mute Chat</button>
+  <button onclick="modAction('slow')">🐢 Slow Mode</button>
+  <button onclick="modAction('kick')">⛔ Kick User</button>
+  <button onclick="modAction('sys')">📢 System Msg</button>
+</div>
+
+<script src="js/state.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/gift-cinematic.js"></script>
+<script src="js/fake-chat.js"></script>
+<script src="js/moderator.js"></script>
+
+</body>
+</html>
