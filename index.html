@@ -4,43 +4,167 @@
 <meta charset="UTF-8">
 <title>Hola Live</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
+
+<style>
+/* INTRO ONLY */
+.intro-wrap{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:28px 22px;
+  background:
+    radial-gradient(circle at top,#3b1d6b 0%,transparent 60%),
+    linear-gradient(180deg,#050008,#000);
+}
+
+.intro-top{
+  text-align:center;
+  margin-top:40px;
+}
+
+.intro-logo{
+  font-family:Orbitron,sans-serif;
+  font-size:44px;
+  letter-spacing:3px;
+  text-shadow:0 0 35px rgba(168,85,255,.7);
+}
+
+.intro-sub{
+  margin-top:10px;
+  font-size:13px;
+  letter-spacing:3px;
+  color:#bba6ff;
+}
+
+/* HERO */
+.intro-hero{
+  margin:50px 0 30px;
+  display:grid;
+  gap:16px;
+}
+
+.hero-card{
+  background:linear-gradient(180deg,#160b2e,#0b0614);
+  border-radius:22px;
+  padding:20px;
+  border:1px solid rgba(168,85,255,.25);
+  box-shadow:0 20px 40px rgba(0,0,0,.6);
+}
+
+.hero-card h3{
+  margin:0 0 6px;
+  font-weight:600;
+}
+
+.hero-card p{
+  margin:0;
+  font-size:13px;
+  opacity:.85;
+}
+
+/* ENTRY */
+.intro-entry{
+  display:grid;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.entry-btn{
+  padding:16px;
+  border-radius:18px;
+  font-size:16px;
+  border:none;
+  font-weight:600;
+  letter-spacing:.5px;
+}
+
+.entry-view{
+  background:#6a00ff;
+  color:white;
+}
+
+.entry-vip{
+  background:linear-gradient(135deg,#ffd700,#b08a00);
+  color:black;
+}
+
+.entry-live{
+  background:#1a1a1a;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.entry-note{
+  text-align:center;
+  font-size:12px;
+  opacity:.6;
+}
+
+/* FADE */
+.fade-out{
+  opacity:0;
+  transition:.6s;
+}
+</style>
 </head>
 
-<body class="intro">
+<body>
 
-<div class="intro-bg"></div>
+<div class="intro-wrap">
 
-<div class="intro-content">
-  <h1 class="logo">HOLA LIVE</h1>
-  <p class="tagline">STREAM · TOKEN · POWER</p>
+  <!-- TOP -->
+  <div class="intro-top">
+    <div class="intro-logo">HOLA LIVE</div>
+    <div class="intro-sub">STREAM · TOKEN · POWER</div>
+  </div>
 
-  <div class="role-cards">
-    <div class="role" onclick="go('lobby.html')">
-      <span>👀</span>
-      <h3>Viewer</h3>
-      <p>Watch & react</p>
+  <!-- HERO VALUE -->
+  <div class="intro-hero">
+    <div class="hero-card">
+      <h3>🎥 Live is the stage</h3>
+      <p>Every stream is an event. Every moment matters.</p>
     </div>
 
-    <div class="role" onclick="go('vip.html')">
-      <span>💎</span>
-      <h3>VIP</h3>
-      <p>Exclusive access</p>
+    <div class="hero-card">
+      <h3>💰 Token is power</h3>
+      <p>Gifts, VIP access, cinematic effects — unlocked.</p>
     </div>
 
-    <div class="role" onclick="go('live.html')">
-      <span>🎥</span>
-      <h3>Streamer</h3>
-      <p>Go live now</p>
+    <div class="hero-card">
+      <h3>💎 VIP is identity</h3>
+      <p>Not everyone enters. Exclusivity is the feature.</p>
     </div>
   </div>
+
+  <!-- ENTRY -->
+  <div class="intro-entry">
+    <button class="entry-btn entry-view" onclick="go('lobby.html')">
+      👀 Enter as Viewer
+    </button>
+
+    <button class="entry-btn entry-vip" onclick="go('vip.html')">
+      💎 Enter VIP Room
+    </button>
+
+    <button class="entry-btn entry-live" onclick="go('live.html')">
+      🔴 Go Live
+    </button>
+
+    <div class="entry-note">
+      This is not social media. This is live economy.
+    </div>
+  </div>
+
 </div>
 
 <script>
-function go(p){
+function go(page){
   document.body.classList.add("fade-out");
-  setTimeout(()=>location.href=p,600);
+  setTimeout(()=>location.href=page,600);
 }
 </script>
 
