@@ -1,3 +1,4 @@
 window.muted=false;
 window.slowMode=false;
-console.log("Hola Live FINAL state ready");
+window.isVIP=false;
+console.log("Hola Live state ready");
