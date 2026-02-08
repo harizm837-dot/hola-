@@ -1,101 +1,112 @@
 :root{
-  --bg:#0b0614;
-  --panel:#160b2e;
-  --neon:#a855ff;
-  --text:#f5f3ff;
-  --muted:#b6a9ff;
+  --bg:#050008;
+  --panel:#12001f;
+  --accent:#6a00ff;
+  --danger:#ff2a2a;
 }
 
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:Inter,sans-serif;
   background:var(--bg);
-  color:var(--text);
-  overflow:hidden;
+  color:#fff;
+  font-family:Inter,sans-serif;
 }
 
-/* ===== INTRO ===== */
-
-.intro-bg{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at top,#5f2dbb 0%,transparent 50%),
-    linear-gradient(180deg,#12001f,#000);
-  filter:blur(0px);
-}
-
-.intro-content{
+/* VIDEO */
+.live-video{
+  height:55vh;
+  background:linear-gradient(135deg,#4000ff,#000);
   position:relative;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:24px;
-  text-align:center;
 }
 
-.logo{
-  font-family:Orbitron,sans-serif;
-  font-size:42px;
-  letter-spacing:2px;
-  margin:0;
-  text-shadow:0 0 25px rgba(168,85,255,.6);
-}
-
-.tagline{
-  margin:8px 0 32px;
-  color:var(--muted);
-  letter-spacing:3px;
+.live-badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:red;
+  padding:4px 10px;
+  border-radius:12px;
   font-size:12px;
 }
 
-/* ===== ROLE CARDS ===== */
-
-.role-cards{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-  width:100%;
-  max-width:360px;
+/* UI */
+.live-ui{
+  padding:12px;
 }
 
-.role{
-  background:linear-gradient(180deg,#1b0f3b,#12001f);
-  border-radius:18px;
-  padding:20px;
-  text-align:left;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
-  border:1px solid rgba(168,85,255,.25);
-  transition:.25s;
+.streamer{
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
-.role span{
-  font-size:26px;
+.streamer img{
+  width:42px;
+  border-radius:50%;
 }
 
-.role h3{
-  margin:8px 0 4px;
-  font-weight:600;
-}
-
-.role p{
-  margin:0;
+.chat{
+  height:160px;
+  margin:10px 0;
+  overflow:hidden;
   font-size:13px;
-  color:var(--muted);
 }
 
-.role:hover{
-  transform:translateY(-4px);
-  box-shadow:0 0 30px rgba(168,85,255,.35);
+.msg{margin:4px 0}
+
+.actions{
+  display:flex;
+  gap:10px;
 }
 
-/* ===== TRANSITION ===== */
+button{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:16px;
+  background:var(--accent);
+  color:white;
+  font-size:15px;
+}
 
-.fade-out{
-  opacity:0;
-  transition:.6s;
+/* MODERATOR PANEL */
+.mod-panel{
+  position:fixed;
+  right:-240px;
+  top:0;
+  width:220px;
+  height:100%;
+  background:linear-gradient(180deg,#1a0033,#000);
+  padding:14px;
+  transition:.4s;
+  z-index:1000;
+  box-shadow:-10px 0 30px rgba(0,0,0,.6);
+}
+
+.mod-panel.active{right:0}
+
+.mod-panel h3{
+  margin-top:0;
+  font-family:Orbitron,sans-serif;
+}
+
+.mod-panel button{
+  width:100%;
+  margin-bottom:10px;
+}
+
+.mod-panel button:nth-child(4){
+  background:orange;
+}
+
+.mod-panel button:nth-child(5){
+  background:var(--danger);
+}
+
+/* SYSTEM MSG */
+.system{
+  color:#ff7bff;
+  font-weight:600;
 }
