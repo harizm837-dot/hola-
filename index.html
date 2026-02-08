@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hola Live</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+
+<body class="intro">
+
+<div class="intro-bg"></div>
+
+<div class="intro-content">
+  <h1 class="logo">HOLA LIVE</h1>
+  <p class="tagline">STREAM · TOKEN · POWER</p>
+
+  <div class="role-cards">
+    <div class="role" onclick="go('lobby.html')">
+      <span>👀</span>
+      <h3>Viewer</h3>
+      <p>Watch & react</p>
+    </div>
+
+    <div class="role" onclick="go('vip.html')">
+      <span>💎</span>
+      <h3>VIP</h3>
+      <p>Exclusive access</p>
+    </div>
+
+    <div class="role" onclick="go('live.html')">
+      <span>🎥</span>
+      <h3>Streamer</h3>
+      <p>Go live now</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function go(p){
+  document.body.classList.add("fade-out");
+  setTimeout(()=>location.href=p,600);
+}
+</script>
+
+</body>
+</html>
