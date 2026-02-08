@@ -1,38 +1,39 @@
 let combo=0,comboTimer=null;
 
 function sendGift(vip=false){
+  if(state.balance<10){
+    alert("No tokens");
+    return;
+  }
+  state.balance-=10;
+  save();
+
   combo++;
   playGift();
 
   if(comboTimer) clearTimeout(comboTimer);
   comboTimer=setTimeout(()=>combo=0,2000);
 
-  burstParticles(vip);
-  floatGift(vip);
+  burstParticles(vip || state.vip);
+  floatGift(vip || state.vip);
   flashScreen();
 
-  if(combo>=3) megaCombo();
+  if(combo>=3 && state.fx) megaCombo();
 }
 
 function burstParticles(vip){
-  for(let i=0;i<25;i++){
+  for(let i=0;i<20;i++){
     const p=document.createElement("div");
     p.className="particle";
     p.textContent=vip?"💎":"✨";
     p.style.left="50%";
     p.style.top="60%";
-    p.style.fontSize=vip?"22px":"18px";
     document.body.appendChild(p);
-
-    const x=Math.random()*400-200;
-    const y=Math.random()*-300;
-
     p.animate([
-      {transform:"translate(0,0) scale(1)",opacity:1},
-      {transform:`translate(${x}px,${y}px) scale(0)`,opacity:0}
-    ],{duration:1200,easing:"ease-out"});
-
-    setTimeout(()=>p.remove(),1300);
+      {transform:"translate(0,0)",opacity:1},
+      {transform:`translate(${Math.random()*400-200}px,${Math.random()*-300}px)`,opacity:0}
+    ],{duration:1200});
+    setTimeout(()=>p.remove(),1200);
   }
 }
 
@@ -41,13 +42,11 @@ function floatGift(vip){
   g.className="gift-float";
   g.textContent=vip?"💎":"🎁";
   document.body.appendChild(g);
-
   g.animate([
-    {transform:"translate(-50%,0) scale(1)",opacity:1},
-    {transform:"translate(-50%,-360px) scale(1.5)",opacity:0}
-  ],{duration:1600,easing:"cubic-bezier(.2,.8,.2,1)"});
-
-  setTimeout(()=>g.remove(),1600);
+    {transform:"translate(-50%,0)",opacity:1},
+    {transform:"translate(-50%,-350px)",opacity:0}
+  ],{duration:1500});
+  setTimeout(()=>g.remove(),1500);
 }
 
 function flashScreen(){
@@ -60,7 +59,7 @@ function flashScreen(){
 function megaCombo(){
   const c=document.createElement("div");
   c.className="combo";
-  c.textContent="💎 VIP COMBO x"+combo;
+  c.textContent="🔥 COMBO x"+combo;
   document.body.appendChild(c);
   setTimeout(()=>c.remove(),1200);
 }
