@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hola Live</title>
+
+  <!-- Three.js -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+    }
+
+    body{
+      background:#000;
+      color:#fff;
+      overflow:hidden;
+    }
+
+    /* ===== CINEMATIC BACKGROUND ===== */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 30% 30%, #0b1c3d, #000),
+        radial-gradient(circle at 70% 70%, #2a0f3f, transparent);
+      animation:bgMove 24s linear infinite;
+      z-index:-1;
+    }
+
+    @keyframes bgMove{
+      0%{transform:scale(1) translate(0,0)}
+      50%{transform:scale(1.12) translate(-30px,-20px)}
+      100%{transform:scale(1) translate(0,0)}
+    }
+
+    /* ===== INTRO LAYER ===== */
+    #intro{
+      position:fixed;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:1.6rem;
+      z-index:10;
+      transition:opacity 1.2s ease;
+    }
+
+    #intro.hide{
+      opacity:0;
+      pointer-events:none;
+    }
+
+    /* ===== LOGO ASSEMBLY ===== */
+    #logo{
+      font-size:2.8rem;
+      letter-spacing:0.18em;
+      font-weight:600;
+    }
+
+    #logo span{
+      display:inline-block;
+      opacity:0;
+      transform:translate(var(--x),var(--y)) scale(0.85);
+      animation:assemble 1.2s ease forwards;
+    }
+
+    @keyframes assemble{
+      to{
+        opacity:1;
+        transform:translate(0,0) scale(1);
+      }
+    }
+
+    /* ===== TAGLINE ===== */
+    #intro p{
+      font-size:0.8rem;
+      letter-spacing:0.25em;
+      opacity:0.7;
+    }
+
+    /* ===== ENTER BUTTON ===== */
+    #enterBtn{
+      margin-top:1.2rem;
+      padding:0.75rem 2.8rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.35);
+      background:rgba(255,255,255,0.06);
+      color:#fff;
+      backdrop-filter:blur(6px);
+      font-size:0.85rem;
+      letter-spacing:0.12em;
+      cursor:pointer;
+      transition:all .35s ease;
+    }
+
+    #enterBtn:hover{
+      background:#fff;
+      color:#000;
+    }
+
+    /* ===== CANVAS ===== */
+    canvas{
+      width:100vw;
+      height:100vh;
+      display:block;
+    }
+
+    /* ===== FOOTER ===== */
+    footer{
+      position:fixed;
+      bottom:12px;
+      width:100%;
+      text-align:center;
+      font-size:11px;
+      opacity:0.5;
+      letter-spacing:0.1em;
+      z-index:2;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- INTRO -->
+  <div id="intro">
+    <h1 id="logo">
+      <span>H</span><span>o</span><span>l</span><span>a</span>
+      <span>&nbsp;</span>
+      <span>L</span><span>i</span><span>v</span><span>e</span>
+    </h1>
+
+    <p>STREAM · PRESENCE · MOMENT</p>
+
+    <button id="enterBtn">ENTER</button>
+  </div>
+
+  <!-- 3D CANVAS -->
+  <canvas id="core"></canvas>
+
+  <footer>
+    © 2026 Hola Live. Бүх эрх хуулиар хамгаалагдсан.
+  </footer>
+
+<script>
+  /* ===== LOGO ASSEMBLY RANDOM ===== */
+  const letters = document.querySelectorAll("#logo span");
+  letters.forEach(l=>{
+    const x=(Math.random()-0.5)*260;
+    const y=(Math.random()-0.5)*180;
+    l.style.setProperty("--x",`${x}px`);
+    l.style.setProperty("--y",`${y}px`);
+  });
+
+  /* ===== ENTER ===== */
+  const intro=document.getElementById("intro");
+  document.getElementById("enterBtn").onclick=()=>{
+    intro.classList.add("hide");
+    setTimeout(()=>{
+      location.href="lobby.html";
+    },1200);
+  };
+
+  /* ===== THREE.JS CORE ORB ===== */
+  const canvas=document.getElementById("core");
+  const scene=new THREE.Scene();
+
+  const camera=new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth/window.innerHeight,
+    0.1,
+    1000
+  );
+  camera.position.z=3;
+
+  const renderer=new THREE.WebGLRenderer({
+    canvas,
+    antialias:true,
+    alpha:true
+  });
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+
+  scene.add(new THREE.AmbientLight(0xffffff,0.6));
+  const light=new THREE.DirectionalLight(0xffffff,0.9);
+  light.position.set(5,5,5);
+  scene.add(light);
+
+  const orb=new THREE.Mesh(
+    new THREE.SphereGeometry(1,64,64),
+    new THREE.MeshStandardMaterial({
+      color:0xffffff,
+      wireframe:true,
+      opacity:0.5,
+      transparent:true
+    })
+  );
+  scene.add(orb);
+
+  function animate(){
+    requestAnimationFrame(animate);
+    orb.rotation.y+=0.0012;
+    orb.rotation.x+=0.0004;
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  window.addEventListener("resize",()=>{
+    camera.aspect=window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth,window.innerHeight);
+  });
+</script>
+
+</body>
+</html>
