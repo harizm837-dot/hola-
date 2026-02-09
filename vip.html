@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola Live · VIP</title>
+<link rel="stylesheet" href="css/core.css">
+
+<style>
+body{
+  margin:0;
+  background:radial-gradient(circle at top,#3a2a00,#050300);
+  color:#fff;
+  font-family:system-ui;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card{
+  background:linear-gradient(180deg,#1c1300,#0b0700);
+  border-radius:28px;
+  padding:40px;
+  width:90%;
+  max-width:420px;
+  text-align:center;
+  box-shadow:0 0 80px rgba(255,215,79,.4);
+}
+
+.card h1{
+  color:#ffd54f;
+  margin-bottom:10px;
+}
+
+.card p{
+  color:#e6d9a8;
+  line-height:1.6;
+}
+
+.vip-badge{
+  font-size:4rem;
+  margin:20px 0;
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.15);}
+  100%{transform:scale(1);}
+}
+
+button{
+  padding:14px 22px;
+  border-radius:16px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  background:#ffd54f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="vip-badge">👑</div>
+  <h1>VIP Орчин</h1>
+  <p>
+    Та бол энгийн үзэгч биш.  
+    Таны чат, gift, оролцоо бусдаас илүү харагдана.
+  </p>
+
+  <button onclick="back()">🎥 Stream руу буцах</button>
+</div>
+
+<script>
+function back(){location.href="live.html";}
+</script>
+
+</body>
+</html>
