@@ -4,51 +4,243 @@
 <meta charset="UTF-8">
 <title>Hola Live · Stream</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --purple:#7a3cff;
+  --gold:#ffd700;
+  --bg:#020005;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:var(--bg);
+  color:white;
+  font-family:Inter,sans-serif;
+  overflow:hidden;
+}
+
+/* ===== LAYOUT ===== */
+.app{
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  height:100vh;
+}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 16px;
+  background:rgba(0,0,0,.4);
+  backdrop-filter:blur(10px);
+}
+
+.brand{
+  font-family:Orbitron,sans-serif;
+  letter-spacing:2px;
+}
+
+.live-dot{
+  color:red;
+  margin-right:6px;
+  animation:pulse 1.4s infinite;
+}
+
+/* ===== STREAM ===== */
+.stream{
+  position:relative;
+  background:
+    radial-gradient(circle at center,#2b115a 0%,transparent 55%),
+    linear-gradient(180deg,#000,#020005);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.fake-video{
+  width:92%;
+  height:78%;
+  border-radius:26px;
+  background:linear-gradient(135deg,#1a0d3a,#060010);
+  box-shadow:0 40px 80px rgba(0,0,0,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Orbitron;
+  letter-spacing:3px;
+  font-size:22px;
+  opacity:.85;
+}
+
+/* GIFT OVERLAY */
+.gift{
+  position:absolute;
+  font-size:42px;
+  animation:giftFly 2.4s forwards;
+  pointer-events:none;
+}
+
+/* ===== CHAT ===== */
+.chat{
+  position:absolute;
+  right:10px;
+  bottom:90px;
+  width:42%;
+  max-width:320px;
+  height:45%;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(12px);
+  border-radius:18px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:13px;
+}
+
+.msg{
+  opacity:.85;
+}
+
+/* ===== BOTTOM BAR ===== */
+.bottombar{
+  display:flex;
+  gap:10px;
+  padding:12px;
+  background:rgba(0,0,0,.6);
+}
+
+.bottombar button{
+  flex:1;
+  padding:14px;
+  border-radius:16px;
+  border:none;
+  font-weight:600;
+}
+
+.btn-gift{
+  background:linear-gradient(135deg,#ffd700,#b08a00);
+  color:#000;
+}
+
+.btn-mod{
+  background:#6a00ff;
+  color:#fff;
+}
+
+.btn-exit{
+  background:#1a1a1a;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.2);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes giftFly{
+  0%{transform:translateY(40px) scale(.4);opacity:0}
+  30%{opacity:1}
+  100%{transform:translateY(-260px) scale(1.4);opacity:0}
+}
+
+@keyframes pulse{
+  0%{opacity:1}
+  50%{opacity:.3}
+  100%{opacity:1}
+}
+</style>
 </head>
 
-<body class="live">
+<body>
 
-<!-- VIDEO -->
-<div class="live-video">
-  <span class="live-badge">🔴 LIVE</span>
-</div>
+<div class="app">
 
-<!-- UI -->
-<div class="live-ui">
+  <!-- TOP -->
+  <div class="topbar">
+    <div class="brand"><span class="live-dot">●</span>HOLA LIVE</div>
+    <div>👁 1,248</div>
+  </div>
 
-  <div class="streamer">
-    <img src="https://i.pravatar.cc/100">
-    <div>
-      <h3>@QueenFox</h3>
-      <p>🔥 3.2k viewers</p>
+  <!-- STREAM -->
+  <div class="stream" id="stream">
+    <div class="fake-video">
+      LIVE STREAM
     </div>
+
+    <!-- CHAT -->
+    <div class="chat" id="chat"></div>
   </div>
 
-  <div id="chat" class="chat"></div>
-
-  <div class="actions">
-    <button onclick="sendGift()">🎁 Gift</button>
-    <button onclick="toggleSound()">🔊</button>
-    <button onclick="toggleMod()">🛡 MOD</button>
+  <!-- BOTTOM -->
+  <div class="bottombar">
+    <button class="btn-gift" onclick="sendGift()">🎁 Send Gift</button>
+    <button class="btn-mod" onclick="toggleMod()">🛡 Mod</button>
+    <button class="btn-exit" onclick="exitLive()">✖ Exit</button>
   </div>
+
 </div>
 
-<!-- MOD PANEL -->
-<div id="modPanel" class="mod-panel">
-  <h3>🛡 Moderator</h3>
-  <button onclick="modAction('mute')">🔇 Mute Chat</button>
-  <button onclick="modAction('slow')">🐢 Slow Mode</button>
-  <button onclick="modAction('kick')">⛔ Kick User</button>
-  <button onclick="modAction('sys')">📢 System Msg</button>
-</div>
+<!-- SOUNDS -->
+<audio id="giftSound">
+  <source src="gift.mp3" type="audio/mpeg">
+</audio>
 
-<script src="js/state.js"></script>
-<script src="js/sound.js"></script>
-<script src="js/gift-cinematic.js"></script>
-<script src="js/fake-chat.js"></script>
-<script src="js/moderator.js"></script>
+<script>
+/* ===== FAKE CHAT FLOW ===== */
+const chat = document.getElementById("chat");
+const names = ["VIP_Ari", "User88", "NomadX", "VIP_Temu", "Viewer21"];
+const texts = [
+  "🔥🔥🔥",
+  "VIP орж ирлээ 😎",
+  "Gift явууллаа!",
+  "Wow cinematic 😲",
+  "Stream fire!"
+];
+
+setInterval(()=>{
+  const m = document.createElement("div");
+  m.className="msg";
+  m.textContent =
+    names[Math.floor(Math.random()*names.length)] +
+    ": " +
+    texts[Math.floor(Math.random()*texts.length)];
+  chat.appendChild(m);
+  chat.scrollTop = chat.scrollHeight;
+  if(chat.children.length>20) chat.removeChild(chat.children[0]);
+},1800);
+
+/* ===== GIFT ===== */
+function sendGift(){
+  const g = document.createElement("div");
+  g.className="gift";
+  g.textContent = ["💎","🔥","🚀","👑"][Math.floor(Math.random()*4)];
+  g.style.left = Math.random()*70 + "%";
+  g.style.bottom = "120px";
+  document.getElementById("stream").appendChild(g);
+
+  const s=document.getElementById("giftSound");
+  s.currentTime=0;
+  s.play().catch(()=>{});
+
+  setTimeout(()=>g.remove(),2400);
+}
+
+/* ===== MOD PANEL (SIM) ===== */
+let mod=false;
+function toggleMod(){
+  mod=!mod;
+  alert(mod ? "MODERATOR MODE ON" : "MODERATOR MODE OFF");
+}
+
+/* ===== EXIT ===== */
+function exitLive(){
+  document.body.style.opacity=0;
+  setTimeout(()=>location.href="index.html",600);
+}
+</script>
 
 </body>
 </html>
