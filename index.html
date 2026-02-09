@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola Live</title>
+
+<meta name="theme-color" content="#0a0f1f">
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===============================
+   ROOT
+================================ */
+:root{
+  --bg:#070b18;
+  --bg2:#0e1530;
+  --accent:#6cf6ff;
+  --accent2:#ff4fd8;
+  --text:#ecf6ff;
+  --muted:#8fa3c7;
+  --glass:rgba(255,255,255,0.08);
+  --blur:blur(22px);
+}
+
+/* ===============================
+   RESET
+================================ */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  width:100%;
+  height:100%;
+  font-family:'Inter',system-ui,sans-serif;
+  background:
+    radial-gradient(circle at top,var(--bg2),var(--bg));
+  color:var(--text);
+  overflow:hidden;
+}
+
+/* ===============================
+   BACKGROUND FX
+================================ */
+.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  z-index:1;
+}
+
+/* ===============================
+   APP
+================================ */
+.app{
+  position:relative;
+  z-index:2;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ===============================
+   HEADER
+================================ */
+header{
+  height:72px;
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 0 30px rgba(124,245,255,.6);
+}
+
+.brand span{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:.6px;
+}
+
+/* ===============================
+   HERO
+================================ */
+.hero{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:24px;
+}
+
+.hero h1{
+  font-size:clamp(40px,8vw,72px);
+  font-weight:800;
+  letter-spacing:1px;
+  margin-bottom:10px;
+}
+
+.hero h1 span{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.tagline{
+  font-size:14px;
+  color:var(--muted);
+  letter-spacing:2px;
+  margin-bottom:36px;
+}
+
+/* ===============================
+   STREAM PREVIEW
+================================ */
+.preview{
+  width:100%;
+  max-width:760px;
+  aspect-ratio:16/9;
+  border-radius:26px;
+  background:
+    linear-gradient(120deg,rgba(255,255,255,.15),transparent),
+    radial-gradient(circle at center,#182356,#060914);
+  box-shadow:
+    0 50px 140px rgba(0,0,0,.7),
+    inset 0 0 80px rgba(124,245,255,.15);
+  position:relative;
+  overflow:hidden;
+  margin-bottom:36px;
+}
+
+.preview::before{
+  content:"LIVE";
+  position:absolute;
+  top:16px;
+  left:16px;
+  background:#ff3344;
+  padding:6px 14px;
+  font-size:12px;
+  font-weight:700;
+  border-radius:10px;
+  letter-spacing:1px;
+}
+
+/* ===============================
+   ROLES
+================================ */
+.roles{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.role{
+  min-width:170px;
+  padding:16px 20px;
+  border-radius:20px;
+  background:var(--glass);
+  backdrop-filter:var(--blur);
+  border:1px solid rgba(255,255,255,.18);
+  font-weight:600;
+  cursor:pointer;
+  transition:.35s;
+}
+
+.role:hover{
+  transform:translateY(-6px) scale(1.03);
+  box-shadow:0 18px 60px rgba(0,0,0,.6);
+}
+
+/* ===============================
+   FOOTER
+================================ */
+footer{
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  color:var(--muted);
+  background:linear-gradient(0deg,rgba(0,0,0,.6),transparent);
+}
+
+/* ===============================
+   ANIM
+================================ */
+.fade{
+  animation:fade .9s ease forwards;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+<div class="noise"></div>
+
+<div class="app fade">
+
+<header>
+  <div class="brand">
+    <div class="logo"></div>
+    <span>Hola Live</span>
+  </div>
+</header>
+
+<section class="hero">
+  <h1><span>Hola</span> Live</h1>
+  <div class="tagline">AMID STREAM UNIVERSE</div>
+
+  <div class="preview"></div>
+
+  <div class="roles">
+    <div class="role" onclick="go('lobby.html')">👁 Үзэгч</div>
+    <div class="role" onclick="go('live.html')">🎥 Стример</div>
+    <div class="role" onclick="go('moderator.html')">🛡 Модератор</div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Hola Live. Бүх эрх хуулиар хамгаалагдсан.
+</footer>
+
+</div>
+
+<script>
+function go(p){
+  document.body.style.opacity=0;
+  setTimeout(()=>location.href=p,420);
+}
+</script>
+</body>
+</html>
