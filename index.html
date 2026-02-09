@@ -1,261 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
 <meta charset="UTF-8">
-<title>Hola Live</title>
+<title>Hola Live – Амьд Стрим Орчин</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/core.css">
 
-<style>
-:root{
-  --purple:#7a3cff;
-  --gold:#ffd700;
-  --bg:#020005;
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  background:var(--bg);
-  color:white;
-  font-family:Inter,sans-serif;
-  overflow:hidden;
-}
-
-/* ===== CINEMATIC INTRO ===== */
-#cinematic{
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at center,#2b115a 0%,transparent 55%),
-    linear-gradient(180deg,#040008,#000);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  z-index:10;
-}
-
-.logo-wrap{
-  position:relative;
-  text-align:center;
-  animation:fadeIn 1.6s ease forwards;
-}
-
-.logo-text{
-  font-family:Orbitron,sans-serif;
-  font-size:52px;
-  letter-spacing:6px;
-  text-shadow:
-    0 0 20px rgba(122,60,255,.6),
-    0 0 60px rgba(122,60,255,.4);
-}
-
-.logo-line{
-  width:0;
-  height:2px;
-  background:linear-gradient(90deg,transparent,var(--purple),transparent);
-  margin:18px auto;
-  animation:lineGrow 1.4s ease forwards;
-}
-
-.logo-sub{
-  font-size:13px;
-  letter-spacing:4px;
-  opacity:.7;
-}
-
-/* PULSE RING */
-.pulse{
-  position:absolute;
-  width:240px;
-  height:240px;
-  border-radius:50%;
-  border:1px solid rgba(122,60,255,.4);
-  animation:pulse 2.8s infinite;
-}
-
-/* ===== MAIN APP ===== */
-#app{
-  opacity:0;
-  transition:1s;
-}
-
-.app-wrap{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  padding:26px 22px;
-  background:
-    radial-gradient(circle at top,#3b1d6b 0%,transparent 60%),
-    linear-gradient(180deg,#050008,#000);
-}
-
-.top{
-  text-align:center;
-  margin-top:40px;
-}
-
-.brand{
-  font-family:Orbitron,sans-serif;
-  font-size:40px;
-  letter-spacing:4px;
-}
-
-.tag{
-  margin-top:8px;
-  font-size:12px;
-  letter-spacing:3px;
-  opacity:.6;
-}
-
-/* VALUE CARDS */
-.values{
-  display:grid;
-  gap:14px;
-  margin:40px 0;
-}
-
-.card{
-  background:linear-gradient(180deg,#160b2e,#0b0614);
-  border-radius:20px;
-  padding:18px;
-  border:1px solid rgba(122,60,255,.25);
-  box-shadow:0 20px 40px rgba(0,0,0,.6);
-}
-
-.card h3{
-  font-size:16px;
-  margin-bottom:6px;
-}
-
-.card p{
-  font-size:13px;
-  opacity:.85;
-}
-
-/* ENTRY */
-.entry{
-  display:grid;
-  gap:14px;
-  margin-bottom:20px;
-}
-
-.btn{
-  padding:16px;
-  border-radius:18px;
-  border:none;
-  font-size:16px;
-  font-weight:600;
-}
-
-.viewer{background:#6a00ff;color:#fff}
-.vip{background:linear-gradient(135deg,#ffd700,#b08a00);color:#000}
-.live{
-  background:#121212;
-  color:#fff;
-  border:1px solid rgba(255,255,255,.2);
-}
-
-.note{
-  text-align:center;
-  font-size:12px;
-  opacity:.6;
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(.9)}
-  to{opacity:1;transform:scale(1)}
-}
-
-@keyframes lineGrow{
-  from{width:0}
-  to{width:180px}
-}
-
-@keyframes pulse{
-  0%{transform:scale(.6);opacity:.8}
-  100%{transform:scale(1.4);opacity:0}
-}
-</style>
 </head>
+<body class="app-bg">
 
-<body>
+<!-- INTRO -->
+<section class="intro-screen">
+  <div class="intro-overlay"></div>
+  <div class="intro-content">
+    <h1>🔥 HOLA LIVE</h1>
+    <p class="subtitle">
+      Стример-төвтэй • Token эдийн засаг • VIP орчин
+    </p>
 
-<!-- CINEMATIC INTRO -->
-<div id="cinematic">
-  <div class="pulse"></div>
-  <div class="logo-wrap">
-    <div class="logo-text">HOLA LIVE</div>
-    <div class="logo-line"></div>
-    <div class="logo-sub">STREAM · TOKEN · POWER</div>
+    <div class="intro-buttons">
+      <button class="btn primary" onclick="goLive()">🎥 LIVE ОРЧИН</button>
+      <button class="btn ghost" onclick="goShop()">🛒 TOKEN ДЭЛГҮҮР</button>
+    </div>
   </div>
-</div>
+</section>
 
-<!-- MAIN APP -->
-<div id="app">
-  <div class="app-wrap">
-
-    <div class="top">
-      <div class="brand">Hola Live</div>
-      <div class="tag">This is not social media</div>
-    </div>
-
-    <div class="values">
-      <div class="card">
-        <h3>🎥 Live is the stage</h3>
-        <p>Every stream feels like an event.</p>
-      </div>
-      <div class="card">
-        <h3>💰 Token is control</h3>
-        <p>Gifts, effects, priority access.</p>
-      </div>
-      <div class="card">
-        <h3>💎 VIP is identity</h3>
-        <p>Not everyone belongs everywhere.</p>
-      </div>
-    </div>
-
-    <div class="entry">
-      <button class="btn viewer" onclick="go('lobby.html')">👀 Enter as Viewer</button>
-      <button class="btn vip" onclick="go('vip.html')">💎 Enter VIP Room</button>
-      <button class="btn live" onclick="go('live.html')">🔴 Go Live</button>
-      <div class="note">Live economy · real attention</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- SOUND -->
-<audio id="introSound" preload="auto">
-  <source src="intro.mp3" type="audio/mpeg">
-</audio>
+<!-- FOOTER -->
+<footer class="mini-footer">
+  <span>© Hola Live Simulation • Монгол платформ</span>
+</footer>
 
 <script>
-const intro = document.getElementById("cinematic");
-const app = document.getElementById("app");
-const sound = document.getElementById("introSound");
-
-setTimeout(()=>{
-  sound.volume = 0.6;
-  sound.play().catch(()=>{});
-},300);
-
-setTimeout(()=>{
-  intro.style.opacity = "0";
-  app.style.opacity = "1";
-},2600);
-
-setTimeout(()=>{
-  intro.style.display = "none";
-},3600);
-
-function go(p){
-  document.body.style.opacity="0";
-  setTimeout(()=>location.href=p,600);
+function goLive(){
+  window.location.href = "shop.html"; // demo зорилгоор
+}
+function goShop(){
+  window.location.href = "shop.html";
 }
 </script>
 
