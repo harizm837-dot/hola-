@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hola Live · Moderator</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --red:#ff3b3b;
+  --purple:#7a3cff;
+  --bg:#020005;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:
+    radial-gradient(circle at top,#2b115a 0%,transparent 55%),
+    linear-gradient(180deg,#050008,#000);
+  color:white;
+  font-family:Inter,sans-serif;
+  overflow:hidden;
+}
+
+/* ===== LAYOUT ===== */
+.app{
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  height:100vh;
+}
+
+/* TOP */
+.topbar{
+  padding:14px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,.5);
+  backdrop-filter:blur(10px);
+}
+
+.brand{
+  font-family:Orbitron;
+  letter-spacing:2px;
+}
+
+.badge{
+  color:var(--red);
+  font-weight:600;
+}
+
+/* USERS */
+.users{
+  padding:18px;
+  overflow:auto;
+  display:grid;
+  gap:14px;
+}
+
+.user{
+  background:linear-gradient(180deg,#160b2e,#0b0614);
+  border-radius:18px;
+  padding:14px;
+  border:1px solid rgba(255,255,255,.15);
+  display:grid;
+  gap:10px;
+}
+
+.user-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.role{
+  font-size:12px;
+  opacity:.7;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+}
+
+.actions button{
+  padding:8px 12px;
+  border-radius:12px;
+  border:none;
+  font-size:12px;
+  font-weight:600;
+}
+
+.kick{background:var(--red);color:white}
+.mute{background:#444;color:white}
+.warn{background:var(--purple);color:white}
+
+/* LOGS */
+.logs{
+  background:rgba(0,0,0,.6);
+  padding:12px;
+  font-size:12px;
+  height:140px;
+  overflow:auto;
+}
+
+/* BOTTOM */
+.bottom{
+  padding:12px;
+  display:flex;
+  gap:10px;
+  background:rgba(0,0,0,.7);
+}
+
+.bottom button{
+  flex:1;
+  padding:14px;
+  border-radius:16px;
+  border:none;
+  font-weight:600;
+}
+
+.btn-exit{
+  background:#1a1a1a;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.2);
+}
+
+/* ===== ANIM ===== */
+.fade{
+  animation:fade .6s forwards;
+}
+
+@keyframes fade{
+  to{opacity:0;transform:translateX(-40px)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- TOP -->
+  <div class="topbar">
+    <div class="brand">HOLA LIVE</div>
+    <div class="badge">MODERATOR</div>
+  </div>
+
+  <!-- USERS -->
+  <div class="users" id="users"></div>
+
+  <!-- LOGS -->
+  <div class="logs" id="logs"></div>
+
+  <!-- BOTTOM -->
+  <div class="bottom">
+    <button class="btn-exit" onclick="exit()">✖ Exit</button>
+  </div>
+
+</div>
+
+<script>
+/* MOCK USERS */
+const usersData=[
+  {name:"VIP_Ari",role:"VIP"},
+  {name:"User88",role:"Viewer"},
+  {name:"NomadX",role:"Viewer"},
+  {name:"VIP_Temu",role:"VIP"},
+  {name:"Viewer21",role:"Viewer"}
+];
+
+const users=document.getElementById("users");
+const logs=document.getElementById("logs");
+
+function log(txt){
+  const t=document.createElement("div");
+  t.textContent=new Date().toLocaleTimeString()+" — "+txt;
+  logs.appendChild(t);
+  logs.scrollTop=logs.scrollHeight;
+}
+
+usersData.forEach(u=>{
+  const card=document.createElement("div");
+  card.className="user";
+
+  card.innerHTML=`
+    <div class="user-head">
+      <div>${u.name} <span class="role">(${u.role})</span></div>
+    </div>
+    <div class="actions">
+      <button class="warn">Warn</button>
+      <button class="mute">Mute</button>
+      <button class="kick">Kick</button>
+    </div>
+  `;
+
+  const [warn,mute,kick]=card.querySelectorAll("button");
+
+  warn.onclick=()=>log("⚠ Warned "+u.name);
+  mute.onclick=()=>log("🔇 Muted "+u.name);
+  kick.onclick=()=>{
+    log("❌ Kicked "+u.name);
+    card.classList.add("fade");
+    setTimeout(()=>card.remove(),600);
+  };
+
+  users.appendChild(card);
+});
+
+log("Moderator panel activated");
+
+/* EXIT */
+function exit(){
+  document.body.style.opacity=0;
+  setTimeout(()=>location.href="index.html",600);
+}
+</script>
+
+</body>
+</html>
