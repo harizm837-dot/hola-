@@ -1,221 +1,242 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
 <meta charset="UTF-8">
-<title>Hola Live · Moderator</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola Live · Moderator Control</title>
+<link rel="stylesheet" href="css/core.css">
 
 <style>
+/* ======================================================
+   HOLA LIVE · MODERATOR PANEL
+   Full Control Simulation
+====================================================== */
+
 :root{
-  --red:#ff3b3b;
-  --purple:#7a3cff;
-  --bg:#020005;
+  --bg:#05030c;
+  --panel:#120a2a;
+  --card:#1a1236;
+  --accent:#9b5cff;
+  --danger:#ff4f6d;
+  --warn:#ff9800;
+  --ok:#4caf50;
+  --text:#f5f5f7;
+  --soft:#b8b3cc;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box}
 
 body{
-  background:
-    radial-gradient(circle at top,#2b115a 0%,transparent 55%),
-    linear-gradient(180deg,#050008,#000);
-  color:white;
-  font-family:Inter,sans-serif;
-  overflow:hidden;
+  margin:0;
+  background:radial-gradient(circle at top,#1c1040,#05030c 70%);
+  color:var(--text);
+  font-family:system-ui,Segoe UI,Roboto;
+  min-height:100vh;
 }
 
-/* ===== LAYOUT ===== */
-.app{
-  display:grid;
-  grid-template-rows:auto 1fr auto;
-  height:100vh;
-}
-
-/* TOP */
-.topbar{
-  padding:14px 16px;
+/* ---------- Header ---------- */
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  padding:16px 20px;
+  background:rgba(10,6,24,.9);
+  backdrop-filter:blur(14px);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:rgba(0,0,0,.5);
-  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-.brand{
-  font-family:Orbitron;
-  letter-spacing:2px;
+header h1{
+  margin:0;
+  font-size:1.1rem;
+  color:var(--accent);
 }
 
-.badge{
-  color:var(--red);
-  font-weight:600;
+header .role{
+  font-size:.85rem;
+  color:var(--soft);
 }
 
-/* USERS */
-.users{
-  padding:18px;
-  overflow:auto;
+/* ---------- Layout ---------- */
+.main{
   display:grid;
-  gap:14px;
+  grid-template-columns:260px 1fr 320px;
+  gap:20px;
+  padding:20px;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar{
+  background:var(--panel);
+  border-radius:18px;
+  padding:16px;
+}
+
+.sidebar h3{
+  margin-top:0;
+  font-size:.9rem;
+  color:var(--soft);
 }
 
 .user{
-  background:linear-gradient(180deg,#160b2e,#0b0614);
-  border-radius:18px;
-  padding:14px;
-  border:1px solid rgba(255,255,255,.15);
-  display:grid;
-  gap:10px;
-}
-
-.user-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.role{
-  font-size:12px;
-  opacity:.7;
-}
-
-.actions{
-  display:flex;
-  gap:8px;
-}
-
-.actions button{
-  padding:8px 12px;
+  padding:10px;
   border-radius:12px;
-  border:none;
-  font-size:12px;
-  font-weight:600;
+  background:rgba(255,255,255,.05);
+  margin-bottom:8px;
+  cursor:pointer;
+}
+.user.vip{border:1px solid var(--accent);}
+.user:hover{background:rgba(255,255,255,.1);}
+
+/* ---------- Control Center ---------- */
+.controls{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 
-.kick{background:var(--red);color:white}
-.mute{background:#444;color:white}
-.warn{background:var(--purple);color:white}
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
 
-/* LOGS */
+.card h3{
+  margin-top:0;
+  font-size:1rem;
+  color:var(--accent);
+}
+
+/* Buttons */
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.25s;
+}
+
+button:hover{transform:translateY(-2px);}
+.mute{background:var(--warn);}
+.kick{background:var(--danger);}
+.ok{background:var(--ok);}
+.fx{background:var(--accent);color:#fff;}
+
+/* ---------- Logs ---------- */
 .logs{
-  background:rgba(0,0,0,.6);
-  padding:12px;
-  font-size:12px;
-  height:140px;
-  overflow:auto;
-}
-
-/* BOTTOM */
-.bottom{
-  padding:12px;
+  background:var(--panel);
+  border-radius:18px;
+  padding:16px;
   display:flex;
-  gap:10px;
-  background:rgba(0,0,0,.7);
+  flex-direction:column;
 }
 
-.bottom button{
+.logs h3{
+  margin-top:0;
+  font-size:.9rem;
+  color:var(--soft);
+}
+
+.log-list{
   flex:1;
+  overflow-y:auto;
+  font-size:.8rem;
+}
+
+.log{
+  margin-bottom:8px;
+  color:var(--soft);
+}
+
+/* ---------- Footer ---------- */
+footer{
   padding:14px;
-  border-radius:16px;
-  border:none;
-  font-weight:600;
-}
-
-.btn-exit{
-  background:#1a1a1a;
-  color:#fff;
-  border:1px solid rgba(255,255,255,.2);
-}
-
-/* ===== ANIM ===== */
-.fade{
-  animation:fade .6s forwards;
-}
-
-@keyframes fade{
-  to{opacity:0;transform:translateX(-40px)}
+  text-align:center;
+  color:var(--soft);
+  font-size:.75rem;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<header>
+  <h1>🛠 Moderator Control</h1>
+  <div class="role">ROLE: Super Moderator</div>
+</header>
 
-  <!-- TOP -->
-  <div class="topbar">
-    <div class="brand">HOLA LIVE</div>
-    <div class="badge">MODERATOR</div>
-  </div>
+<div class="main">
 
   <!-- USERS -->
-  <div class="users" id="users"></div>
+  <aside class="sidebar">
+    <h3>👥 Хэрэглэгчид</h3>
+    <div class="user vip">👑 VIP_Naraa</div>
+    <div class="user">Bold</div>
+    <div class="user">Anu</div>
+    <div class="user">StreamerFan</div>
+  </aside>
+
+  <!-- CONTROLS -->
+  <section class="controls">
+
+    <div class="card">
+      <h3>💬 Чат хяналт</h3>
+      <button class="mute" onclick="action('Chat muted')">Чат mute</button>
+      <button class="ok" onclick="action('Slow mode ON')">Slow mode</button>
+      <button class="kick" onclick="action('Chat cleared')">Чат цэвэрлэх</button>
+    </div>
+
+    <div class="card">
+      <h3>👤 Хэрэглэгч</h3>
+      <button class="kick" onclick="action('User kicked')">Kick</button>
+      <button class="mute" onclick="action('User muted')">Mute</button>
+      <button class="ok" onclick="action('VIP highlighted')">VIP Highlight</button>
+    </div>
+
+    <div class="card">
+      <h3>🎥 Stream State</h3>
+      <button class="ok" onclick="action('Stream LIVE')">LIVE</button>
+      <button class="mute" onclick="action('Stream PAUSED')">PAUSE</button>
+      <button class="kick" onclick="action('Emergency alert')">ALERT</button>
+    </div>
+
+    <div class="card">
+      <h3>✨ Global FX</h3>
+      <button class="fx" onclick="action('Global FX fired')">Cinematic FX</button>
+      <button class="fx" onclick="action('VIP Glow FX')">VIP Glow</button>
+    </div>
+
+  </section>
 
   <!-- LOGS -->
-  <div class="logs" id="logs"></div>
-
-  <!-- BOTTOM -->
-  <div class="bottom">
-    <button class="btn-exit" onclick="exit()">✖ Exit</button>
-  </div>
+  <aside class="logs">
+    <h3>📜 Action Log</h3>
+    <div class="log-list" id="logList"></div>
+  </aside>
 
 </div>
 
+<footer>
+  Hola Live · Moderator Simulation · Backend-гүй demo
+</footer>
+
 <script>
-/* MOCK USERS */
-const usersData=[
-  {name:"VIP_Ari",role:"VIP"},
-  {name:"User88",role:"Viewer"},
-  {name:"NomadX",role:"Viewer"},
-  {name:"VIP_Temu",role:"VIP"},
-  {name:"Viewer21",role:"Viewer"}
-];
+/* ---------- Fake backend log ---------- */
+const logList=document.getElementById("logList");
 
-const users=document.getElementById("users");
-const logs=document.getElementById("logs");
-
-function log(txt){
-  const t=document.createElement("div");
-  t.textContent=new Date().toLocaleTimeString()+" — "+txt;
-  logs.appendChild(t);
-  logs.scrollTop=logs.scrollHeight;
-}
-
-usersData.forEach(u=>{
-  const card=document.createElement("div");
-  card.className="user";
-
-  card.innerHTML=`
-    <div class="user-head">
-      <div>${u.name} <span class="role">(${u.role})</span></div>
-    </div>
-    <div class="actions">
-      <button class="warn">Warn</button>
-      <button class="mute">Mute</button>
-      <button class="kick">Kick</button>
-    </div>
-  `;
-
-  const [warn,mute,kick]=card.querySelectorAll("button");
-
-  warn.onclick=()=>log("⚠ Warned "+u.name);
-  mute.onclick=()=>log("🔇 Muted "+u.name);
-  kick.onclick=()=>{
-    log("❌ Kicked "+u.name);
-    card.classList.add("fade");
-    setTimeout(()=>card.remove(),600);
-  };
-
-  users.appendChild(card);
-});
-
-log("Moderator panel activated");
-
-/* EXIT */
-function exit(){
-  document.body.style.opacity=0;
-  setTimeout(()=>location.href="index.html",600);
+function action(text){
+  const d=document.createElement("div");
+  d.className="log";
+  d.textContent=
+    new Date().toLocaleTimeString()+" — "+text;
+  logList.appendChild(d);
+  logList.scrollTop=logList.scrollHeight;
 }
 </script>
 
