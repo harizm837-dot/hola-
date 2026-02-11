@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola Live · Token Ledger</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* ======================================================
+   ROOT THEME
+====================================================== */
+:root{
+  --bg:#060810;
+  --panel:#12182b;
+  --panel2:#0f1526;
+  --glass:rgba(255,255,255,0.05);
+  --border:rgba(255,255,255,0.15);
+  --text:#eaf6ff;
+  --muted:#8ea6c6;
+  --accent:#7df9ff;
+  --pink:#ff4fd8;
+  --gold:#ffd76a;
+  --green:#00ffa3;
+  --danger:#ff4455;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html,body{
+  height:100%;
+  font-family:'Inter',sans-serif;
+  background:radial-gradient(circle at top,#141b33,#05070f 65%);
+  color:var(--text);
+  overflow:hidden;
+}
+
+/* ======================================================
+   LAYOUT
+====================================================== */
+.app{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  height:100%;
+}
+
+/* ======================================================
+   SIDEBAR
+====================================================== */
+.sidebar{
+  background:linear-gradient(180deg,#0b1022,#070b15);
+  border-right:1px solid var(--border);
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+}
+
+.brand{
+  font-family:'Montserrat',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:30px;
+  background:linear-gradient(90deg,var(--accent),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.balance-box{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:24px;
+}
+
+.balance-box h4{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+.balance-amount{
+  font-size:24px;
+  font-weight:700;
+  color:var(--gold);
+}
+
+/* ======================================================
+   MAIN
+====================================================== */
+.main{
+  display:flex;
+  flex-direction:column;
+}
+
+.header{
+  height:64px;
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+
+.header h2{
+  font-family:'Montserrat',sans-serif;
+  font-size:20px;
+}
+
+/* ======================================================
+   CONTENT
+====================================================== */
+.content{
+  flex:1;
+  padding:24px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+/* ======================================================
+   FILTER
+====================================================== */
+.filters{
+  display:flex;
+  gap:12px;
+}
+
+.filters button{
+  padding:10px 16px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  color:var(--text);
+  cursor:pointer;
+  transition:.3s;
+}
+
+.filters button.active,
+.filters button:hover{
+  background:linear-gradient(135deg,var(--accent),var(--pink));
+  color:#000;
+}
+
+/* ======================================================
+   LEDGER TABLE
+====================================================== */
+.table{
+  background:var(--panel);
+  border-radius:22px;
+  border:1px solid var(--border);
+  padding:20px;
+  overflow:hidden;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+
+th,td{
+  padding:12px;
+  text-align:left;
+}
+
+th{
+  color:var(--muted);
+  font-weight:500;
+}
+
+tr{
+  transition:.3s;
+}
+
+tr:hover{
+  background:rgba(255,255,255,0.05);
+}
+
+tr:not(:last-child){
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.income{color:var(--green)}
+.expense{color:var(--danger)}
+
+/* ======================================================
+   TIMELINE BAR
+====================================================== */
+.timeline{
+  background:var(--panel2);
+  border-radius:22px;
+  border:1px solid var(--border);
+  padding:20px;
+}
+
+.timeline h3{
+  margin-bottom:16px;
+}
+
+.timeline-bar{
+  height:16px;
+  width:100%;
+  background:rgba(255,255,255,0.08);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.timeline-fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--pink));
+  transition:1s ease;
+}
+
+/* ======================================================
+   FOOTER
+====================================================== */
+.footer{
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">HOLA LIVE</div>
+
+    <div class="balance-box">
+      <h4>Одоогийн Token</h4>
+      <div class="balance-amount" id="balance">1500</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="header">
+      <h2>💰 Token Ledger</h2>
+      <div id="liveIndicator" class="income">LIVE</div>
+    </div>
+
+    <div class="content">
+
+      <!-- FILTERS -->
+      <div class="filters">
+        <button class="active" onclick="setFilter('all',this)">Бүгд</button>
+        <button onclick="setFilter('income',this)">Орлого</button>
+        <button onclick="setFilter('expense',this)">Зарлага</button>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Огноо</th>
+              <th>Тайлбар</th>
+              <th>Төрөл</th>
+              <th>Token</th>
+            </tr>
+          </thead>
+          <tbody id="ledgerBody">
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="timeline">
+        <h3>📈 Balance Timeline</h3>
+        <div class="timeline-bar">
+          <div class="timeline-fill" id="timelineFill"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      © 2026 Hola Live. Бүх эрх хуулиар хамгаалагдсан.
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+/* ================================
+   FAKE LEDGER SYSTEM
+================================ */
+
+let balance = 1500;
+let history = [];
+let filter = "all";
+
+function addTransaction(type,desc,amount){
+  const date = new Date().toLocaleTimeString();
+  history.unshift({date,type,desc,amount});
+
+  if(type==="income"){
+    balance += amount;
+  }else{
+    balance -= amount;
+  }
+
+  render();
+}
+
+function render(){
+  document.getElementById("balance").textContent = balance;
+
+  const body = document.getElementById("ledgerBody");
+  body.innerHTML="";
+
+  history
+    .filter(item => filter==="all" || item.type===filter)
+    .slice(0,15)
+    .forEach(item=>{
+      const row=document.createElement("tr");
+      row.innerHTML=`
+        <td>${item.date}</td>
+        <td>${item.desc}</td>
+        <td class="${item.type==='income'?'income':'expense'}">
+          ${item.type==='income'?'Орлого':'Зарлага'}
+        </td>
+        <td class="${item.type==='income'?'income':'expense'}">
+          ${item.type==='income'?'+':'-'}${item.amount}
+        </td>
+      `;
+      body.appendChild(row);
+    });
+
+  const percent=Math.min(balance/3000*100,100);
+  document.getElementById("timelineFill").style.width=percent+"%";
+}
+
+function setFilter(type,btn){
+  filter=type;
+  document.querySelectorAll(".filters button")
+    .forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+
+/* ================================
+   REALTIME SIMULATION
+================================ */
+
+function randomEvent(){
+  const rand=Math.random();
+  if(rand>0.5){
+    addTransaction("income","Gift Income",Math.floor(Math.random()*200)+10);
+  }else{
+    addTransaction("expense","VIP Upgrade",Math.floor(Math.random()*100)+20);
+  }
+}
+
+setInterval(randomEvent,2500);
+render();
+
+</script>
+
+</body>
+</html>
