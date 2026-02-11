@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hola Live · VIP Center</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#060810;
+  --panel:#12182b;
+  --glass:rgba(255,255,255,0.08);
+  --border:rgba(255,255,255,0.15);
+  --text:#eaf6ff;
+  --muted:#8fa5c4;
+  --accent:#7df9ff;
+  --gold:#ffd76a;
+  --vip:#ffcc33;
+  --pink:#ff4fd8;
+  --blur:blur(20px);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  height:100%;
+  font-family:'Inter',sans-serif;
+  background:radial-gradient(circle at top,#141b33,#05070f 65%);
+  color:var(--text);
+  overflow:hidden;
+}
+
+.app{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  height:100%;
+}
+
+/* SIDEBAR */
+.sidebar{
+  background:linear-gradient(180deg,#0c1024,#070b15);
+  padding:22px;
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+}
+
+.brand{
+  font-family:'Montserrat',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:28px;
+  background:linear-gradient(90deg,var(--accent),var(--pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.role-box{
+  background:var(--glass);
+  padding:18px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  backdrop-filter:var(--blur);
+}
+
+.role-box h3{
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+
+.current-role{
+  font-size:22px;
+  font-weight:700;
+  color:var(--vip);
+}
+
+/* MAIN */
+.main{
+  display:flex;
+  flex-direction:column;
+}
+
+.header{
+  height:64px;
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+
+.header h2{
+  font-family:'Montserrat',sans-serif;
+  font-size:20px;
+}
+
+.vip-area{
+  flex:1;
+  padding:30px;
+  overflow-y:auto;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:24px;
+}
+
+/* VIP CARD */
+.card{
+  background:var(--panel);
+  border-radius:24px;
+  padding:24px;
+  border:1px solid var(--border);
+  position:relative;
+  transition:.4s;
+  overflow:hidden;
+}
+
+.card:hover{
+  transform:translateY(-10px) scale(1.04);
+  box-shadow:0 25px 70px rgba(0,0,0,.7);
+}
+
+.card.locked::before{
+  content:"🔒";
+  position:absolute;
+  top:12px;
+  right:16px;
+  font-size:18px;
+}
+
+.card h3{
+  margin-bottom:12px;
+}
+
+.badge{
+  font-size:38px;
+  margin-bottom:12px;
+}
+
+.features{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:18px;
+  line-height:1.5em;
+}
+
+.unlock{
+  width:100%;
+  padding:12px;
+  border-radius:16px;
+  border:none;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+  background:linear-gradient(135deg,var(--accent),var(--pink));
+}
+
+.unlock:hover{
+  transform:scale(1.05);
+}
+
+.active{
+  border:1px solid var(--vip);
+  box-shadow:0 0 20px var(--vip);
+}
+
+/* FOOTER */
+.footer{
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">HOLA LIVE</div>
+
+    <div class="role-box">
+      <h3>Таны Одоогийн VIP</h3>
+      <div class="current-role" id="currentRole">FREE</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="header">
+      <h2>💎 VIP Center</h2>
+      <div>Premium Access</div>
+    </div>
+
+    <div class="vip-area">
+      <div class="grid">
+
+        <!-- VIP 1 -->
+        <div class="card" id="vip1">
+          <div class="badge">⭐</div>
+          <h3>VIP Silver</h3>
+          <div class="features">
+            • Badge<br>
+            • Chat highlight<br>
+            • 5% Bonus Token
+          </div>
+          <button class="unlock" onclick="unlock('VIP Silver',1)">
+            Unlock – 500 Token
+          </button>
+        </div>
+
+        <!-- VIP 2 -->
+        <div class="card locked" id="vip2">
+          <div class="badge">🔥</div>
+          <h3>VIP Gold</h3>
+          <div class="features">
+            • Premium Badge<br>
+            • Stream Priority<br>
+            • 10% Bonus Token
+          </div>
+          <button class="unlock" onclick="unlock('VIP Gold',2)">
+            Unlock – 1000 Token
+          </button>
+        </div>
+
+        <!-- VIP 3 -->
+        <div class="card locked" id="vip3">
+          <div class="badge">👑</div>
+          <h3>VIP Diamond</h3>
+          <div class="features">
+            • Diamond Badge<br>
+            • Exclusive Room<br>
+            • 20% Bonus Token
+          </div>
+          <button class="unlock" onclick="unlock('VIP Diamond',3)">
+            Unlock – 2000 Token
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer">
+      © 2026 Hola Live. Бүх эрх хуулиар хамгаалагдсан.
+    </div>
+
+  </div>
+</div>
+
+<script>
+let balance = 1500;
+let currentLevel = 0;
+
+function unlock(name,level){
+  const price = level === 1 ? 500 : level === 2 ? 1000 : 2000;
+
+  if(balance < price){
+    alert("Token хүрэлцэхгүй!");
+    return;
+  }
+
+  if(level <= currentLevel){
+    alert("Та аль хэдийн энэ түвшинд байна.");
+    return;
+  }
+
+  balance -= price;
+  currentLevel = level;
+
+  document.getElementById("currentRole").textContent = name;
+
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+  document.getElementById("vip"+level).classList.add('active');
+
+  alert(name + " амжилттай unlock боллоо!");
+}
+</script>
+
+</body>
+</html>
