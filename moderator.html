@@ -3,11 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hola Live Moderator Dashboard">
 <title>Hola Live · Модератор</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
+
 /* ================= ROOT ================= */
 :root{
   --bg:#0b0f1a;
@@ -19,23 +23,27 @@
   --accent:#7df9ff;
   --danger:#ff3344;
   --ok:#4dff88;
-  --blur:blur(16px);
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{
-  width:100%;height:100%;
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
   font-family:'Inter',sans-serif;
   background:radial-gradient(circle at top,#141b33,#05070f 65%);
   color:var(--text);
-  overflow:hidden;
+  min-height:100vh;
 }
 
 /* ================= LAYOUT ================= */
 .app{
   display:grid;
   grid-template-columns:260px 1fr;
-  height:100%;
+  min-height:100vh;
 }
 
 /* ================= SIDEBAR ================= */
@@ -49,7 +57,6 @@ html,body{
   font-family:'Montserrat',sans-serif;
   font-size:22px;
   font-weight:800;
-  letter-spacing:1px;
   margin-bottom:30px;
   background:linear-gradient(90deg,var(--accent),#ff4fd8);
   -webkit-background-clip:text;
@@ -66,11 +73,11 @@ html,body{
   color:var(--text);
   text-align:left;
   cursor:pointer;
-  transition:.3s;
+  transition:.25s;
 }
+
 .menu button:hover{
   transform:translateX(6px);
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
 }
 
 /* ================= MAIN ================= */
@@ -79,7 +86,6 @@ html,body{
   flex-direction:column;
 }
 
-/* HEADER */
 .header{
   height:60px;
   display:flex;
@@ -87,21 +93,23 @@ html,body{
   justify-content:space-between;
   padding:0 20px;
   border-bottom:1px solid var(--border);
-  background:linear-gradient(180deg,rgba(0,0,0,.5),transparent);
 }
 
 .status{
   display:flex;
-  gap:14px;
+  gap:10px;
   align-items:center;
-}
-.dot{
-  width:10px;height:10px;border-radius:50%;
-  background:var(--ok);
-  box-shadow:0 0 10px var(--ok);
+  font-size:14px;
 }
 
-/* CONTENT */
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--ok);
+  box-shadow:0 0 8px var(--ok);
+}
+
 .content{
   flex:1;
   padding:20px;
@@ -110,7 +118,7 @@ html,body{
   gap:20px;
 }
 
-/* ================= STREAM PANEL ================= */
+/* ================= STREAM ================= */
 .stream-panel{
   background:var(--panel);
   border-radius:24px;
@@ -128,31 +136,36 @@ html,body{
   margin-bottom:16px;
   position:relative;
 }
+
 .stream-preview::after{
   content:"LIVE";
   position:absolute;
-  top:12px;left:12px;
+  top:12px;
+  left:12px;
   background:var(--danger);
   padding:4px 10px;
   border-radius:10px;
   font-size:12px;
 }
 
-/* CONTROLS */
 .controls{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
 }
+
 .ctrl{
   padding:12px 14px;
   border-radius:14px;
   background:var(--glass);
   border:1px solid var(--border);
   cursor:pointer;
-  transition:.3s;
+  transition:.25s;
 }
-.ctrl:hover{transform:scale(1.05)}
+
+.ctrl:hover{
+  transform:scale(1.05);
+}
 
 /* ================= CHAT ================= */
 .chat-panel{
@@ -161,6 +174,7 @@ html,body{
   border:1px solid var(--border);
   display:flex;
   flex-direction:column;
+  overflow:hidden;
 }
 
 .chat-header{
@@ -173,31 +187,38 @@ html,body{
   flex:1;
   padding:14px;
   overflow-y:auto;
+  font-size:13px;
 }
 
 .msg{
-  margin-bottom:10px;
-  font-size:13px;
+  margin-bottom:8px;
 }
-.msg span{color:var(--accent)}
 
-/* CHAT INPUT */
+.msg span{
+  color:var(--accent);
+  font-weight:600;
+}
+
 .chat-input{
   display:flex;
   border-top:1px solid var(--border);
 }
+
 .chat-input input{
   flex:1;
   background:transparent;
   border:none;
   padding:14px;
   color:var(--text);
+  outline:none;
 }
+
 .chat-input button{
   padding:0 18px;
   background:var(--accent);
   border:none;
   cursor:pointer;
+  font-weight:600;
 }
 
 /* ================= FOOTER ================= */
@@ -210,20 +231,33 @@ html,body{
   align-items:center;
   justify-content:center;
 }
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:1000px){
+  .app{
+    grid-template-columns:1fr;
+  }
+  .sidebar{
+    display:none;
+  }
+  .content{
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
   <aside class="sidebar">
     <div class="brand">HOLA LIVE</div>
     <div class="menu">
-      <button>📊 Статус</button>
-      <button>💬 Чат</button>
-      <button>🎁 Бэлэг</button>
-      <button>🚫 Ban / Mute</button>
-      <button>🔒 VIP Lock</button>
+      <button data-link="index.html">🏠 Нүүр</button>
+      <button data-link="lobby.html">📊 Статус</button>
+      <button data-link="live.html">🎥 Live</button>
     </div>
   </aside>
 
@@ -239,25 +273,29 @@ html,body{
     <div class="content">
 
       <div class="stream-panel">
-        <div class="stream-preview"></div>
+        <div class="stream-preview" aria-label="Live stream preview"></div>
         <div class="controls">
-          <div class="ctrl">⏸ Түр зогсоох</div>
-          <div class="ctrl">🔇 Mute</div>
-          <div class="ctrl">🚫 Kick</div>
-          <div class="ctrl">🔒 VIP</div>
+          <button class="ctrl">⏸ Түр зогсоох</button>
+          <button class="ctrl">🔇 Mute</button>
+          <button class="ctrl">🚫 Kick</button>
+          <button class="ctrl">🔒 VIP</button>
         </div>
       </div>
 
       <div class="chat-panel">
         <div class="chat-header">Чат хяналт</div>
-        <div class="chat" id="chat">
+        <div class="chat" id="chat" role="log" aria-live="polite">
           <div class="msg"><span>user01:</span> Сайн стрим 🔥</div>
-          <div class="msg"><span>vip_girl:</span> ❤️❤️❤️</div>
         </div>
-        <div class="chat-input">
-          <input placeholder="Модератор мессеж..." id="msg">
-          <button onclick="send()">→</button>
-        </div>
+
+        <form class="chat-input" id="chatForm">
+          <input 
+            id="msgInput" 
+            placeholder="Модератор мессеж..." 
+            autocomplete="off"
+            required>
+          <button type="submit">→</button>
+        </form>
       </div>
 
     </div>
@@ -270,15 +308,43 @@ html,body{
 </div>
 
 <script>
-function send(){
-  const input=document.getElementById('msg');
-  if(!input.value) return;
-  const div=document.createElement('div');
-  div.className='msg';
-  div.innerHTML='<span>MOD:</span> '+input.value;
-  document.getElementById('chat').appendChild(div);
-  input.value='';
-}
+(() => {
+
+/* ========= SAFE CHAT SEND ========= */
+const form = document.getElementById('chatForm');
+const input = document.getElementById('msgInput');
+const chat = document.getElementById('chat');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const text = input.value.trim();
+  if(!text) return;
+
+  const msg = document.createElement('div');
+  msg.className = 'msg';
+
+  const user = document.createElement('span');
+  user.textContent = 'MOD:';
+
+  msg.appendChild(user);
+  msg.append(' ' + text);
+
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+
+  input.value = '';
+});
+
+/* ========= SAFE NAVIGATION ========= */
+document.querySelectorAll('[data-link]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const page = btn.dataset.link;
+    if(page) window.location.href = page;
+  });
+});
+
+})();
 </script>
+
 </body>
 </html>
